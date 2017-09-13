@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back">
+
+    <TextView
+        android:id = "@+id/cishu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="击球次数：      00"
+        android:textSize="24sp"
+        android:layout_marginTop="52dp"
+        android:layout_below="@+id/timer"
+        android:layout_toStartOf="@+id/stop" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="运动时间:"
+        android:textSize="24sp"
+        android:id="@+id/textView"
+        android:layout_marginTop="96dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/cishu" />
+
+
+    <Chronometer
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textSize="24sp"
+             android:id="@+id/timer"
+             android:format="%s"
+             android:layout_marginStart="56dp"
+        android:layout_alignBaseline="@+id/textView"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始"
+        android:layout_alignBaseline="@+id/again"
+        android:layout_alignBottom="@+id/again"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="26dp" />
+
+    <Button
+        android:id="@+id/again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂停"
+        android:layout_marginTop="78dp"
+        android:layout_below="@+id/cishu"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/again"
+        android:layout_marginEnd="24dp"
+        android:text="停止" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:text="查看运动结果"
+        android:layout_below="@+id/again"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
