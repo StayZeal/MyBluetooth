@@ -1,44 +1,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back"
- >
-
+    android:orientation="vertical">
 
 
     <Switch
         android:id="@+id/open"
         android:layout_width="202dp"
         android:layout_height="105dp"
-        android:text="蓝牙开关"
-        android:switchMinWidth="50dp"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_centerHorizontal="true" />
-
+        android:switchMinWidth="50dp"
+        android:text="蓝牙开关" />
 
 
     <Button
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="开始搜索"
-        android:layout_marginLeft="159dp"
         android:layout_below="@+id/open"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="159dp"
+        android:text="开始搜索" />
+
     <Button
         android:id="@+id/up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        android:layout_below="@+id/open"
         android:layout_alignStart="@+id/search"
-        android:text="刷新列表"/>
+        android:layout_below="@+id/open"
+        android:layout_marginTop="75dp"
+        android:text="刷新列表" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/device"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/up"/>
+        android:layout_below="@+id/up" />
 </RelativeLayout>

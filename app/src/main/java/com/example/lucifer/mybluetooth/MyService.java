@@ -1,9 +1,6 @@
 package com.example.lucifer.mybluetooth;
 
 import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -14,18 +11,21 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Binder;
+import android.os.IBinder;
 import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
 
 public class MyService extends Service {
+    private static final String TAG = MyService.class.getSimpleName();
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothGatt mGatt = null;
     private int mConnectionState = STATE_DISCONNECTED;
-    private String mBluetoothDeviceAddress;
+    private String mPreDeviceAddress;
 
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTING = 1;
@@ -41,14 +41,14 @@ public class MyService extends Service {
 
     public boolean connect(final String address) {
         if (mBluetoothAdapter == null || address == null) {
-            Log.w("MyService", "BluetoothAdapter not initialized or unspecified address.");
+            Log.e(TAG, "BluetoothAdapter not initialized or unspecified address.");
             return false;
         }
 
         // Previously connected device.  Try to reconnect.
-        if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress)
+        if (mPreDeviceAddress != null && address.equals(mPreDeviceAddress)
                 && mGatt != null) {
-            Log.d("MyService", "Trying to use an existing mBluetoothGatt for connection.");
+            Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
             if (mGatt.connect()) {
                 mConnectionState = STATE_CONNECTING;
                 return true;
@@ -66,7 +66,7 @@ public class MyService extends Service {
         // parameter to false.
         mGatt = device.connectGatt(this, false, mGattCallback);
         Log.d("MyService", "Trying to create a new connection.");
-        mBluetoothDeviceAddress = address;
+        mPreDeviceAddress = address;
         mConnectionState = STATE_CONNECTING;
         return true;
     }
