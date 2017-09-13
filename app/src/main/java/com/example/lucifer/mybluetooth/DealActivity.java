@@ -109,38 +109,38 @@ public class DealActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
             if (MyService.ACTION_GATT_CONNECTED.equals(action)) {
-                Log.v("DealActivity", "处于连接状态");
+                Log.i(TAG, "处于连接状态");
             } else if (MyService.ACTION_GATT_DISCONNECTED.equals(action)) {
-                Log.v("DealActivity", "处于未连接状态");
+                Log.i(TAG, "处于未连接状态");
                 Intent intent2 = new Intent(DealActivity.this, MainActivity.class);
                 startActivity(intent2);
                 Toast.makeText(DealActivity.this, "连接断开请重试", Toast.LENGTH_SHORT).show();
             } else if (MyService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 // Show all the supported services and characteristics on the user interface.
-                Log.v("DealActivity", "已连接到服务");
+                Log.i(TAG, "已连接到服务");
                 progressDialog.dismiss();
                 characteristics = getCharacteristic(); // 获取所有的characteristic
                 setNotifyReceive(characteristics); // 给这些特性加通知
             } else if (MyService.ACTION_DATA_AVAILABLE.equals(action)) {
-                Log.v("DealActivity", "数据可获得");
+                Log.i(TAG, "数据可获得");
 
                 if (run_state) {
                     byte[] data = intent
                             .getByteArrayExtra(mBluetoothLeService.PINGPANG_DATA);
                     test = test + 1;
-                    Log.v("DealActivity", "111=test2=" + test);
+                    Log.i(TAG, "111=test2=" + test);
                     if (data != null && data.length > 0) {
                         final StringBuilder stringBuilder = new StringBuilder(
                                 data.length);
                         for (byte byteChar : data)      //将数据data中的byteChar数据遍历得出
                             stringBuilder.append(String.format("%02X ", byteChar));//将得到的byteChar格式化为16进制，超过两位则正常输出，不足两位前面补0
                         String str = stringBuilder.toString().trim();
-                        Log.v("DealActivity", "111=" + str);
+                        Log.i(TAG, "111=" + str);
                         String[] date = str.split(" ");//将字符串分割为字符串数组
 
                         switch (Integer.parseInt(date[2])) {
                             case 53:
-                                Log.v("DealActivity", "111=写压力");
+                                Log.i(TAG, "111=写压力");
                                 hit_count = hit_count + 1;
                                 try1.setText("击球次数：      " + hit_count);
 
@@ -175,7 +175,7 @@ public class DealActivity extends AppCompatActivity {
                                 lidutable.insert("lidu", null, values);
                                 values.clear();
 
-                                Log.v("DealActivity", "压力数据可存储");
+                                Log.i(TAG, "压力数据可存储");
 
                                 break;
                             case 51:
@@ -204,7 +204,7 @@ public class DealActivity extends AppCompatActivity {
                                         acctable.insert("ACCELERATION", null, values2);
                                         values2.clear();
 
-                                        Log.v("DealActivity", "可存储加速度数据");
+                                        Log.i(TAG, "可存储加速度数据");
                                     }
                                 }).start();
 
@@ -239,7 +239,7 @@ public class DealActivity extends AppCompatActivity {
                                         angletable.insert("ANGLE", null, values3);
                                         values3.clear();
 
-                                        Log.v("DealActivity", "可存储角度数据");
+                                        Log.i(TAG, "可存储角度数据");
                                     }
                                 }).start();
 //
@@ -315,7 +315,7 @@ public class DealActivity extends AppCompatActivity {
                     Intent intent = new Intent(DealActivity.this, CountActivity.class);
 
                     temp0 = Integer.parseInt(timer.getText().toString().split(":")[0]);
-                    Log.v("DealActivity", "现在的计时为" + temp0 + "分");
+                    Log.i(TAG, "现在的计时为" + temp0 + "分");
                     cal = temp0 * 6;//每小时消耗360千卡，则每分钟约消耗6千卡
 
                     intent.putExtra("cal_data", " " + cal + " ");
@@ -333,7 +333,7 @@ public class DealActivity extends AppCompatActivity {
     //开始计时方法
     View.OnClickListener mStartListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Log.v("DealActivity", "点击开始按钮");
+            Log.i(TAG, "点击开始按钮");
             test = 0;
             timer.setBase(SystemClock.elapsedRealtime());
             timer.start();

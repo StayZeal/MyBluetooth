@@ -1,14 +1,23 @@
 package com.example.lucifer.mybluetooth;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -67,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFound(BluetoothDevice device) {
-                bluetoothLists.add(device);
-                devicesAdapter.notifyDataSetChanged();
+                addData(device);
             }
 
             @Override
@@ -97,8 +105,47 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+
     }
 
+    private void checkBluetoothPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            //校验是否已具有模糊定位权限
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        100);
+            } else {
+                //具有权限
+                startSearch();
+            }
+        } else {
+            //系统不高于6.0直接执行
+            startSearch();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //同意权限
+                startSearch();
+            } else {
+                // 权限拒绝
+                // 下面的方法最好写一个跳转，可以直接跳转到权限设置页面，方便用户
+                Toast.makeText(this, "用户拒绝权限", Toast.LENGTH_SHORT);
+                Log.i(TAG, "用户拒绝权限");
+            }
+
+        }
+
+
+    }
 
     public void initView() {
 
@@ -126,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bluetoothLists.clear();
-                mBluetoothAdapter.startDiscovery();
+//                startSearch();
+                checkBluetoothPermission();
             }
         });
 
@@ -172,6 +219,69 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    private void startSearch() {
+        bluetoothLists.clear();
+
+        BluetoothLeScanner bluetoothLeScanner;
+        if (Build.VERSION.SDK_INT >= 23) {
+            bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+            bluetoothLeScanner.startScan(new ScanCallback() {
+                @Override
+                public void onScanResult(int callbackType, ScanResult result) {
+                    Log.i(TAG, "onScanResult--->" + callbackType);
+                    if (Build.VERSION.SDK_INT >= 23 && callbackType == ScanSettings.CALLBACK_TYPE_FIRST_MATCH) {
+                        BluetoothDevice device = result.getDevice();
+                        Log.i(TAG, device.getName() + " " + device.getAddress());
+                    }
+
+                }
+
+                @Override
+                public void onBatchScanResults(List<ScanResult> results) {
+                    Log.i(TAG, "onBatchScanResults--->");
+                    for (ScanResult result : results) {
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            BluetoothDevice device = result.getDevice();
+                            Log.i(TAG, device.getName() + " " + device.getAddress());
+                        }
+                    }
+                }
+
+                @Override
+                public void onScanFailed(int errorCode) {
+                    super.onScanFailed(errorCode);
+                }
+            });
+
+
+            bluetoothLeScanner.stopScan(new ScanCallback() {
+                @Override
+                public void onScanResult(int callbackType, ScanResult result) {
+                    super.onScanResult(callbackType, result);
+                }
+
+                @Override
+                public void onBatchScanResults(List<ScanResult> results) {
+                    super.onBatchScanResults(results);
+                }
+
+                @Override
+                public void onScanFailed(int errorCode) {
+                    super.onScanFailed(errorCode);
+                }
+            });
+        } else {
+            mBluetoothAdapter.startDiscovery();
+        }
+    }
+
+
+    private void addData(BluetoothDevice device) {
+        bluetoothLists.add(device);
+        devicesAdapter.notifyDataSetChanged();
+
+    }
 
 }
 
