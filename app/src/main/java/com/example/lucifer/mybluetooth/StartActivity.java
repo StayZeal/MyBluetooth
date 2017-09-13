@@ -10,7 +10,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.content.Intent;
 
-public class startActivity extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity {
     private ImageView iv_start;
 
     @Override
@@ -52,7 +52,7 @@ public class startActivity extends AppCompatActivity {
     }
 
     private void startActivity() {
-        Intent intent = new Intent(startActivity.this, MainActivity.class);
+        Intent intent = new Intent(StartActivity.this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
