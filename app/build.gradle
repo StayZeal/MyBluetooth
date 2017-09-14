@@ -29,4 +29,6 @@ dependencies {
 //    compile 'com.android.support.constraint:CONSTRAINT-layout:1.0.1'
     testCompile 'junit:junit:4.12'
     compile 'org.litepal.android:core:1.5.1'
+    //数据库debug相关
+    debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
 }
