@@ -174,7 +174,7 @@ public class MyService extends Service {
 
 
     public class LocalBinder extends Binder {
-        MyService getService() {
+       public MyService getService() {
             return MyService.this;
         }
     }
