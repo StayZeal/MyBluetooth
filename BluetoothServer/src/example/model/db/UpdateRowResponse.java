@@ -16,16 +16,14 @@
  *  *    limitations under the License.
  *
  */
-package example.model;
+
+package example.model.db;
 /**
  * Created by amitshekhar on 04/02/17.
  */
 
-public class RowDataRequest {
+public class UpdateRowResponse {
 
-    public String title;
-    public boolean isPrimary;
-    public String dataType;
-    public String value;
+    public boolean isSuccessful;
 
 }

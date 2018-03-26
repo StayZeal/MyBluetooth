@@ -12,7 +12,8 @@ import java.sql.SQLException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import example.model.TableDataResponse;
+import example.model.db.TableDataResponse;
+import example.model.http.Response;
 import example.sql.DB;
 import example.sql.SqliteHelper;
 import example.util.Log;
@@ -68,17 +69,17 @@ public class UploadHandler {
 			}
 
 			Log.i(postData);
-			uploadData(postData);
+			Response response = uploadData(postData);
 
 			Log.i("route:" + route);
 			output = new PrintStream(socket.getOutputStream());
 
 			// Send out the content.
 			output.println("HTTP/1.1 200 OK");
-//			output.println("Content-Type: " + Utils.detectMimeType(route));
+			// output.println("Content-Type: " + Utils.detectMimeType(route));
 			output.println("Content-Type: " + "application/octet-stream");
-			String response = "{\"success\":true}";
-			byte[] bytes = response.getBytes();
+			String responseStr = new Gson().toJson(response);
+			byte[] bytes = responseStr.getBytes();
 			output.println("Content-Length: " + bytes.length);
 			output.println();
 			output.write(bytes);
@@ -101,12 +102,15 @@ public class UploadHandler {
 		}
 	}
 
-	private void uploadData(String data) {
+	private Response uploadData(String data) {
 
 		String[] params = data.split("&");
 		int count = params.length;
 		String tableName = null;
 		String tableData = null;
+
+		Response response = new Response();
+
 		for (int i = 0; i < count; i++) {
 
 			String[] values = params[i].split("=");
@@ -123,18 +127,24 @@ public class UploadHandler {
 			tableData = URLDecoder.decode(tableData, "utf-8");
 			Log.i("table data: " + tableData);
 			TableDataResponse tableDataResponse = new Gson().fromJson(tableData, TableDataResponse.class);
-			insertData(tableName, tableDataResponse);
+			return insertData(tableName, tableDataResponse);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
+			response.success = false;
+			response.errMsg = Response.ErrMsg.ONE;
+			response.errorCode = Response.ErrCode.ONE;
+
+			return response;
 		}
 
 	}
 
-	private void insertData(String tableName, TableDataResponse tableDataResponse) {
+	private Response insertData(String tableName, TableDataResponse tableDataResponse) {
 
 		DB db = DB.getInstance();
-		db.insert(tableName, tableDataResponse);
+		return db.insert(tableName, tableDataResponse);
 	}
 
 }

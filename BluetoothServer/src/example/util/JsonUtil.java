@@ -2,7 +2,7 @@ package example.util;
 
 import com.google.gson.stream.JsonReader;
 
-import example.model.TableDataResponse;
+import example.model.db.TableDataResponse;
 
 public class JsonUtil {
 	

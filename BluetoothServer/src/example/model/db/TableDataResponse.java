@@ -17,13 +17,30 @@
  *
  */
 
-package example.model;
+package example.model.db;
+import java.util.List;
+
 /**
  * Created by amitshekhar on 04/02/17.
  */
 
-public class UpdateRowResponse {
+public class TableDataResponse {
 
+    public List<TableInfo> tableInfos;
     public boolean isSuccessful;
+    public List<List<ColumnData>> rows;
+    public String errorMessage;
+    public boolean isEditable;
+    public boolean isSelectQuery;
+
+    public static class TableInfo {
+        public String title;
+        public boolean isPrimary;
+    }
+
+    public static class ColumnData {
+        public String dataType;
+        public Object value;
+    }
 
 }

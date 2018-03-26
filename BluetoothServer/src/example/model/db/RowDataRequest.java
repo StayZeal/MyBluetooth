@@ -16,23 +16,16 @@
  *  *    limitations under the License.
  *
  */
+package example.model.db;
+/**
+ * Created by amitshekhar on 04/02/17.
+ */
 
-package example.model;
-import java.util.ArrayList;
-import java.util.List;
+public class RowDataRequest {
 
- 
-
-public class Response {
-
-    public List<Object> rows = new ArrayList<>();
-    public List<String> columns = new ArrayList<>();
-    public boolean isSuccessful;
-    public String error;
-    public int dbVersion;
-
-    public Response() {
-
-    }
+    public String title;
+    public boolean isPrimary;
+    public String dataType;
+    public String value;
 
 }

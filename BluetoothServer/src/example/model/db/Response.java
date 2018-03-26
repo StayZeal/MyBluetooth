@@ -17,30 +17,22 @@
  *
  */
 
-package example.model;
+package example.model.db;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by amitshekhar on 04/02/17.
- */
+ 
 
-public class TableDataResponse {
+public class Response {
 
-    public List<TableInfo> tableInfos;
+    public List<Object> rows = new ArrayList<>();
+    public List<String> columns = new ArrayList<>();
     public boolean isSuccessful;
-    public List<List<ColumnData>> rows;
-    public String errorMessage;
-    public boolean isEditable;
-    public boolean isSelectQuery;
+    public String error;
+    public int dbVersion;
 
-    public static class TableInfo {
-        public String title;
-        public boolean isPrimary;
-    }
+    public Response() {
 
-    public static class ColumnData {
-        public String dataType;
-        public Object value;
     }
 
 }

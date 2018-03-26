@@ -10,9 +10,10 @@ import java.util.List;
 
 import javax.swing.plaf.synth.SynthSpinnerUI;
 
-import example.model.TableDataResponse;
-import example.model.TableDataResponse.ColumnData;
-import example.model.TableDataResponse.TableInfo;
+import example.model.db.TableDataResponse;
+import example.model.db.TableDataResponse.ColumnData;
+import example.model.db.TableDataResponse.TableInfo;
+import example.model.http.Response;
 import example.util.Log;
 
 public class DB {
@@ -66,8 +67,9 @@ public class DB {
 
 	}
 
-	public void insert(String tableName, TableDataResponse tableDataResponse) {
+	public Response insert(String tableName, TableDataResponse tableDataResponse) {
 
+		Response response = new Response();
 		try {
 			SqliteHelper sqliteHelper = new SqliteHelper(DB.DB_NAME);
 
@@ -83,7 +85,7 @@ public class DB {
 
 				if (tableName.equals(ANGLE)) {
 					sql = "insert into " + tableName + " values('" + row.get(0).value + "'," + row.get(1).value + ","
-							+ row.get(2).value + ","+ row.get(3).value + "," + row.get(4).value + ")";
+							+ row.get(2).value + "," + row.get(3).value + "," + row.get(4).value + ")";
 				} else {
 					sql = "insert into " + tableName + " values('" + row.get(0).value + "'," + row.get(1).value + ","
 							+ row.get(2).value + ")";
@@ -95,9 +97,20 @@ public class DB {
 
 			sqliteHelper.executeUpdate(insertSql);
 
+			response.success = true;
+			response.result = "表 " + tableName + " 数据上传成功";
+
+			return response;
+
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
+			response.success = false;
+			response.errMsg = Response.ErrMsg.TWO;
+			response.errorCode = Response.ErrCode.TWO;
+
+			return response;
 		}
 	}
 
