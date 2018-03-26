@@ -3,9 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_0"
-        android:title="设置服务器IP" />
-    <item
         android:id="@+id/menu_1"
         android:title="上传表ACCELERATION" />
     <item

@@ -69,13 +69,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         Disposable disposable;
 
         switch (item.getItemId()) {
-            case R.id.menu_0:
-
-                Intent intent = new Intent(thisActivity, SetIPActivity.class);
-                startActivity(intent);
-
-                return true;
-
             case R.id.menu_1:
                 initWebApi();
                 disposable = UploadDB.upload(UploadDB.TYPE_INSERT_ACCELERATION, mWebApi);

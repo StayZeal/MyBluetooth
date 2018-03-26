@@ -10,6 +10,9 @@ public class MyApplication extends Application {
     private static Context mContext;
 
 //    public static String IP = "192.168.1.106";
+    /**
+     * 服务器IP地址
+     */
     public static String IP = "192.168.3.26";
     public static String url = "http://" + IP;
 

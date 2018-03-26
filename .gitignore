@@ -9,3 +9,7 @@
 .externalNativeBuild
 /.idea/vcs.xml
 /.metadata/
+/BluetoothServer/bin/
+.recommenders/caches/
+app/libs/
+app/src/main/assets/
