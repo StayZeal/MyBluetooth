@@ -49,7 +49,10 @@ public class UploadHandler {
 					int start = line.indexOf('/') + 1;
 					int end = line.indexOf(' ', start);
 					route = line.substring(start, end);
-					break;
+
+					GetHandler getHandler = new GetHandler();
+					getHandler.getProcess(socket);
+					return;
 				}
 
 				if (line.indexOf("Content-Length:") > -1) {
