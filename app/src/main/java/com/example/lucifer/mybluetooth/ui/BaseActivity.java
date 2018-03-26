@@ -4,7 +4,6 @@ package com.example.lucifer.mybluetooth.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.TokenWatcher;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -47,7 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (getIntent() != null) {
             getParams(getIntent());
         }
-        initWebApi();
         initView();
         getData();
     }
@@ -79,16 +77,18 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return true;
 
             case R.id.menu_1:
-
+                initWebApi();
                 disposable = UploadDB.upload(UploadDB.TYPE_INSERT_ACCELERATION, mWebApi);
                 addSubscription(disposable);
 
                 return true;
             case R.id.menu_2:
+                initWebApi();
                 disposable = UploadDB.upload(UploadDB.TYPE_INSERT_ANGLE, mWebApi);
                 addSubscription(disposable);
                 return true;
             case R.id.menu_3:
+                initWebApi();
                 disposable = UploadDB.upload(UploadDB.TYPE_INSERT_LIDU, mWebApi);
                 addSubscription(disposable);
                 return true;

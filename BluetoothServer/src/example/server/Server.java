@@ -9,17 +9,16 @@ public class Server {
 
 	public static void main(String[] args) {
 
-		 ClientServer clientServer = new ClientServer(80);
-		 clientServer.start();
+		ClientServer clientServer = new ClientServer(80);
+		clientServer.start();
 
-//		test();
+		// test();
 	}
 
 	private static void test() {
-		// TODO Auto-generated method stub
-
+		ServerSocket server = null;
 		try {
-			ServerSocket server = new ServerSocket(179);
+			server = new ServerSocket(179);
 			while (true) {
 				System.out.println("Connection¡­¡­");
 				Socket socket = server.accept();
@@ -28,6 +27,14 @@ public class Server {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if (server != null) {
+				try {
+					server.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}

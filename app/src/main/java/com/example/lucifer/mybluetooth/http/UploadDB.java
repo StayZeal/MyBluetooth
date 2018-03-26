@@ -1,16 +1,12 @@
 package com.example.lucifer.mybluetooth.http;
 
 
-import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.amitshekhar.server.RequestHandler;
 import com.example.lucifer.mybluetooth.MyApplication;
 import com.example.lucifer.mybluetooth.ToastUtil;
 import com.example.lucifer.mybluetooth.bean.ApiResult;
-
-import java.lang.annotation.Target;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -45,17 +41,6 @@ public class UploadDB {
 
 
         return uploadAcc(type);
-
-//        switch (type) {
-//            case 1:
-//
-//                uploadAcc(type);
-//                break;
-//            case 2:
-//                break;
-//            case 3:
-//                break;
-//        }
     }
 
     private static Disposable uploadAcc(int type) {
@@ -78,19 +63,19 @@ public class UploadDB {
 
 
         return getData(type)
-                .flatMap(new Function<String, Observable<String>>() {
+                .flatMap(new Function<String, Observable<ApiResult>>() {
                     @Override
-                    public Observable<String> apply(String data) throws Exception {
+                    public Observable<ApiResult> apply(String data) throws Exception {
                         return mWebApiInterface.upload(tableName, data);
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
+                .subscribe(new Consumer<ApiResult>() {
                     @Override
-                    public void accept(String apiResult) throws Exception {
+                    public void accept(ApiResult apiResult) throws Exception {
 
-                        Log.i(TAG, tableName + "上传成功:" + apiResult);
+                        Log.i(TAG, tableName + "上传成功:" );
                     }
                 }, new Consumer<Throwable>() {
                     @Override

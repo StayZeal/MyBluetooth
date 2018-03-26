@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import example.model.TableDataResponse;
+import example.model.TableDataResponse.ColumnData;
 import example.model.TableDataResponse.TableInfo;
 import example.util.Log;
 
@@ -77,14 +78,15 @@ public class DB {
 
 			for (int i = 0; i < count; i++) {
 
-				List row = (List) rows.get(i);
+				List<ColumnData> row = (List) rows.get(i);
 				String sql = null;
 
 				if (tableName.equals(ANGLE)) {
-
+					sql = "insert into " + tableName + " values('" + row.get(0).value + "'," + row.get(1).value + ","
+							+ row.get(2).value + ","+ row.get(3).value + "," + row.get(4).value + ")";
 				} else {
-					sql = "insert into" + tableName + "values('" + row.get(0) + ",'" + row.get(1) + "'" + row.get(2)
-							+ ",)";
+					sql = "insert into " + tableName + " values('" + row.get(0).value + "'," + row.get(1).value + ","
+							+ row.get(2).value + ")";
 				}
 				Log.i("sql: " + sql);
 

@@ -74,10 +74,10 @@ public class UploadHandler {
 			output = new PrintStream(socket.getOutputStream());
 
 			// Send out the content.
-			output.println("HTTP/1.0 200 OK");
+			output.println("HTTP/1.1 200 OK");
 //			output.println("Content-Type: " + Utils.detectMimeType(route));
 			output.println("Content-Type: " + "application/octet-stream");
-			String response = "{success:true}";
+			String response = "{\"success\":true}";
 			byte[] bytes = response.getBytes();
 			output.println("Content-Length: " + bytes.length);
 			output.println();

@@ -1,7 +1,6 @@
 package com.example.lucifer.mybluetooth.http;
 
 
-import com.example.lucifer.mybluetooth.MyApplication;
 import com.example.lucifer.mybluetooth.bean.ApiResult;
 
 import io.reactivex.Observable;
@@ -14,7 +13,7 @@ public interface WebApiInterface {
 
     @FormUrlEncoded
     @POST("/")
-    Observable<String> upload(@Field("table_name") String tableName, @Field("db_data") String data);
+    Observable<ApiResult> upload(@Field("table_name") String tableName, @Field("db_data") String data);
 
 
 }
