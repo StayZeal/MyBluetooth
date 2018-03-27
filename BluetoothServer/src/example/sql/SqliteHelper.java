@@ -127,12 +127,18 @@ public class SqliteHelper {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public void executeUpdate(List<String> sqls) throws SQLException, ClassNotFoundException {
+    public void executeUpdate(List<String> sqls) {
         try {
             for (String sql : sqls) {
-                getStatement().executeUpdate(sql);
+                try {
+					getStatement().executeUpdate(sql);
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
-        } finally {
+        }  
+        finally {
             destroyed();
         }
     }
