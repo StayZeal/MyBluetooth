@@ -68,9 +68,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         Disposable disposable;
 
+        //上传数据
         switch (item.getItemId()) {
             case R.id.menu_1:
                 initWebApi();
+                //上传表ACCELERATION
                 disposable = UploadDB.upload(UploadDB.TYPE_INSERT_ACCELERATION, mWebApi);
                 addSubscription(disposable);
 

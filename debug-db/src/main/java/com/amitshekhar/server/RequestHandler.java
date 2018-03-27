@@ -218,6 +218,11 @@ public class RequestHandler {
         return mGson.toJson(response);
     }
 
+    /**
+     * 读取数据库，用Gson封装成Json字符串
+     * @param route
+     * @return
+     */
     public String getAllDataFromTheTableResponse(String route) {
 
         String tableName = null;
@@ -235,6 +240,7 @@ public class RequestHandler {
             response = PrefHelper.getAllPrefData(mContext, tableName);
         }
 
+        //封装成Json字符串
         return mGson.toJson(response);
 
     }
