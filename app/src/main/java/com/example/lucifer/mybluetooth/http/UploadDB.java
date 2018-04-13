@@ -105,6 +105,7 @@ public class UploadDB {
         }
 
         final String tableName = table;
+        //RxJava 进行网络请求
         return Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> e) throws Exception {
@@ -115,6 +116,9 @@ public class UploadDB {
                 requestHandler.openDatabase(GlobalConfig.DATABASE_NAME);
 
                 String route = "?tableName=" + tableName;
+                /**
+                 * 读取数据库，用Gson封装成Json字符串
+                 */
                 String data = requestHandler.getAllDataFromTheTableResponse(route);
 
                 Log.i(TAG, "table:" + tableName + ": " + data);

@@ -62,6 +62,13 @@ public class DatabaseHelper {
         return response;
     }
 
+    /**
+     * 执行数据库查询
+     * @param db
+     * @param selectQuery
+     * @param tableName
+     * @return
+     */
     public static TableDataResponse getTableData(SQLiteDB db, String selectQuery, String tableName) {
 
         TableDataResponse tableData = new TableDataResponse();
