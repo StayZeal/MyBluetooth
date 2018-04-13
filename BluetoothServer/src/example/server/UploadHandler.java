@@ -27,6 +27,8 @@ public class UploadHandler {
 	public static final String INSERT_LIDU = "inser_lidu";
 	private Gson mGson;
 
+	boolean flag = true;
+
 	public UploadHandler() {
 		mGson = new GsonBuilder().serializeNulls().create();
 	}
@@ -44,12 +46,25 @@ public class UploadHandler {
 			String line;
 			int postDataI = -1;
 			Log.i("Header:");
-			while (!TextUtils.isEmpty(line = reader.readLine())) {
+			int c;
+
+//			while ((c=reader.read()) != -1) {
+//				Log.i(String.valueOf((char)c));
+//
+//			}
+
+			while ((line = reader.readLine()) != null) {
+//				 while (!TextUtils.isEmpty(line = reader.readLine())) {
+				// int i=0;
+				// while (i<8) {
+				// i++;
+				// line = reader.readLine();
 				if (line.startsWith("GET /")) {
 					int start = line.indexOf('/') + 1;
 					int end = line.indexOf(' ', start);
 					route = line.substring(start, end);
 
+					Log.i("route:" + route);
 					GetHandler getHandler = new GetHandler();
 					getHandler.getProcess(socket);
 					return;
@@ -62,6 +77,7 @@ public class UploadHandler {
 				Log.i(line);
 
 			}
+			Log.i("----------------");
 
 			String postData = "";
 			// read the post data
@@ -72,7 +88,9 @@ public class UploadHandler {
 			}
 
 			Log.i(postData);
-			Response response = uploadData(postData);
+//			Response response = uploadData(postData);
+			Response response = new Response();
+			response.result="msg form server";
 
 			Log.i("route:" + route);
 			output = new PrintStream(socket.getOutputStream());

@@ -12,7 +12,7 @@ public interface WebApiInterface {
 
 
     @FormUrlEncoded
-    @POST("/")
+    @POST("/sdfasfas")
     Observable<ApiResult> upload(@Field("table_name") String tableName, @Field("db_data") String data);
 
 
